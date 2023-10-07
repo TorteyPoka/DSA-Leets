@@ -7,29 +7,39 @@ public:
     vector<int> twoSum(vector<int> &nums, int target)
     {
         int size = nums.size();
+        int temp[size];
         int start = 0, end = size - 1;
+        int val1, val2;
 
-        sort(nums.begin(), nums.end(), greater<>());
+        for (int i = 0; i < size; i++)
+            temp[i] = nums[i];
+
+        sort(temp, temp + size, greater<>());
 
         while (start < end)
         {
-            long long sum = nums[start] + nums[end];
+            long long sum = temp[start] + temp[end];
 
-            if(sum == target)
-                return {start, end};
-
-            if (nums[start] >= target)
+            if (sum == target)
             {
-                start++;
-                continue;
+                val1 = temp[start], val2 = temp[end];
+                break;
             }
-            
-            if(sum > target)
+            if (sum > target)
                 end--;
             else
-             start++;
+                start++;
         }
-        return {-1, -1};
+
+        for (int i = 0; i < size; i++)
+        {
+            if (nums[i] == val1)
+                start = i;
+            
+            else if (nums[i] == val2)
+                end = i;
+        }
+        return {start, end};
     }
 };
 
